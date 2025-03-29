@@ -1,0 +1,58 @@
+Task 1:
+    - salvez in esi string-ul primit pe stiva ca parametru al functiei
+    - zeriozez eax (unde salvez caloarea returnata) si ecx (folosit ca iterator prin sir)
+    - la fiecare pas al repetitivei verific tipul de paranteza
+    - in cazul in care este deschisa o adaug la stiva
+    - daca este paranteza inchisa extrag ultimul element adaugat la stiva si verific daca este perechea parantezei curente
+    - in cazul in care cele doua nu se potrivesc ies din repetitiva si schimb valoarea de retur si "golesc" stiva de parantezele existente
+    - altfel cresc ecx si verific daca am ajuns la finalul stringului
+    - daca nu am ajuns, trec la urmatorul element din strig
+    - altfel compar esp si ebp pentru a verifica daca mai sunt paranteze in stiva
+    - in caz afirmativ inseamna ca parantezarea nu este buna si in acest caz schimb valoarea de retur si "golesc" stiva
+    - altfel nu fac modificari la eax
+
+Task 2:
+quick_sort:
+    - am definit un macro pentru a retine numarul de bytes al unui int
+    - am salvat la fiecare intare in functia recursiva valorile la esi, edi si ebx
+    - salvez in esi sirul de numere, in ebx index-ul de start curent si in edx cel de final, in eax salvez valoarea curenta a pivotului
+    - compar indecsii, iar daca cel de start este mai mare sau egal ca cel de final, ies din functia curenta
+    - ecx este folosit pentru a itera in vector, iar edi este folosit pentru a retine pozitia de inserare a elementelor mai mici ca pivotul
+    - cresc edx pentru a nuta in acest loop si pivotul la pozitia sa buna in vector
+    - daca elementul curent din vector este mai mic ca pivotul acesta este adaugat la inceputul vectorului, facandu-se swap intre elementul curent si cel de la pozitia la care ar trebui acesta mutat
+    - altfel avansez in vector
+    - la finalul repetitivei scad edx pentru a reveni la valoarea sa initiala si salvez in ecx index-ul pivotului
+    - pentru partea care se afla inaintea vectorului, adaug in stiva index-ul de start, cel cu 1 mai mic ca al pivotului si sirul, dupa care apelez recursiv functia
+    - la intoarcerea din recursivitate restaurez aceste valori
+    - pentru cea de-a doua parte pun in stiva index-ul cu 1 mai mare ca cel al pivotului, cel final si sirul
+    - daca sirul s-a terminat de sortat (s-a efectuat intoarcerea din toate recursivitatile), restaurez cei trei registri ai caror valoare trebuie sa nu se modifice in urma executiei functiei
+
+binary_search:
+     - am definit un macro pentru a retine numarul de bytes al unui int
+    - am salvat la fiecare intare in functia recursiva valorile la esi, edi si ebx
+    - deoarece s-a folosit fastcall, primele doua argumente sunt salvate in ecx si edx, resul pe stiva
+    - astfel salvez in esi sirul de caractere copiind ce este in ecx si in edi valoarea pe care o caut (gasita in edx)
+    - indexul de start (ebx) si cel de final (edx) le preiau de pe stiva
+    - pun in eax valoarea -1 (pentru cazul in care nu este gasit elementul cautat)
+    - daca indexul de start este mai mare ca cel de final inseamna ca elementul cautat nu se afla in sir asa ca trec sirect la iesirea din recursivitate
+    - altfel, calculez in ecx mijlocul (media aritmetica intre indexul de start si cel de final)
+    - daca valoarea din sir de la indexul mijloc este egala cu valoarea cautata modific valoarea de return (eax) in index-ul mijlocului
+    - altfel verific daca valoarea de la mijloc este mai mica decat cea cautata
+    - in caz afirmativ caut in prima jumatate (pun pe stiva indicele de start si mijloc-1, in ecx sirul si in edx valoarea cautata)
+    - altfel caut in a doua jumatate (pun pe stiva indicele de mijloc+1 si final, in ecx sirul si in edx valoarea cautata)
+    - dupa intoarcerea din oricare din cele doua jumatati sar la iesirea din recursivitate pentru a nu fi modificata valoarea care trebuie returnata
+    - in final restaurez valorile din edx, edi si esi
+
+Task 3:
+    - am definit un macro pentru a retine numarul de bytes al unui int
+    - am salvat la fiecare intare in functia recursiva valorile la esi, edi si ebx
+    - salvez in ebx nodul de start si in edi adresa functiei expand
+    - verific daca nodul este vizitat si in caz afirmativ ies din functie
+    - altfel marchez nodul ca vizitat si il afisez (pun pe stiva nodul curent si formatul de afisare si apelez printf, apoi scot cele doua de pe stiva)
+    - extrag structura de vecini in eax (pun pe stiva nodul curent si apelez functia expand care returneaza structura de vecini a ndoului curent in eax, dupa care scot de pe stiva ebx)
+    - salvez in ecx numarul de vecini si verific daca este zero, iar in caz afirmativ ies din functie
+    - altfel salvez vectorul de vecini in esi si zeriozez edx pentru a il folosi ca index de iteratie prin sirul de vecini
+    - in loop pun pe stiva ecx si edx (pentru a nu le pierde valoarea in urma apelului recursiv)
+    - mai adaug si edi si vecinul curent din vector dupa care apelez dfs
+    - la intoarcerea din recursivitate scot de pe stiva cele doua elemente folosite ca paremetrii pt apel si restaurez ecx si edx
+    - in final restaurez si esi, edi si ebx
